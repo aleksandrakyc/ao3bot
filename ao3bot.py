@@ -2,16 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 from collections import OrderedDict
 
-# this is dumb, make a list of dicts
-# possible features:
-# - adding to a query: language, excluding stuff
-# - make this run at a realistic speed
-# - save a number of fics relative to how many works there are
-# - and
 
 def createFic(*args):
-    return{"hits": int(args[0]), "kudos": int(args[1]), "title": args[2], "author": args[3], "summary": args[4],
-           "link": args[5], "quality": int(args[1])/int(args[0])}
+    return {"hits": int(args[0]), "kudos": int(args[1]), "title": args[2], "author": args[3], "summary": args[4],
+            "link": args[5], "quality": int(args[1]) / int(args[0])}
 
 
 class Fic:
@@ -34,6 +28,7 @@ class Fic:
         #    return 0
 
         return self.kudos / self.hits
+
     # nie liczy jak zero
     # jakies minimum kudosow
     # w pozniejszej zabawie mozna dodac bookmarki komentarze
@@ -50,7 +45,6 @@ class Fic:
 
 
 class Search:
-
     Fics = []
 
     def __init__(self, *args):
@@ -142,7 +136,7 @@ class Search:
     def print_best(self):
         print("printing best")
         # for x in self.Fics:
-            # x.fprint()
+        # x.fprint()
 
     def minf(self):
         fmin = self.Fics[0]
@@ -160,7 +154,8 @@ class Search:
             return False
 
     def ao3ify_str(self, ao3str):
-        changes = OrderedDict([(" ", "%20"), ("/", "*s*"), (".","*d*"), ("|", "%7C")]) # no need for ordered dicts, they are ordered now
+        changes = OrderedDict(
+            [(" ", "%20"), ("/", "*s*"), (".", "*d*"), ("|", "%7C")])  # no need for ordered dicts, they are ordered now
         for i, j in changes.items():
             ao3str = ao3str.replace(i, j)
 
