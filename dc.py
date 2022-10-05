@@ -24,41 +24,46 @@ async def on_message(message):
 
     if message.content.startswith('$rec'):
         # add a message saying it might take a while
+
         tag = message.content
         tag = tag.strip('$rec ')
         print(tag)
-        x = Search(tag)
-        x.eat_fics()
-        Fics = x.print_best()
+        try:
+            x = Search(tag)
+            await message.channel.send('give me a moment <3')
+            x.eat_fics()
+            Fics = x.print_best()
 
-        # PRINT RANDOM
+            # PRINT RANDOM
 
-        fic = Fics[random.randint(0, Fics.length)]
-        embed = discord.Embed(
-            url=fic["link"],
-            title=fic["title"]
-        )
-        # embed.set_author(name) - eat author url
+            # fic = Fics[random.randint(0,len(Fics)-1)] # tu chyba jest problem
+            # embed = discord.Embed(
+            # url = fic["link"],
+            # title = fic["title"]
+            # )
 
-        embed.add_field(name="Author", value=fic["author"])
+            # embed.add_field(name="Author", value=fic["author"])
+            # await message.channel.send(embed = embed)
 
-        # embed.add_field(name="Summary", value=i["summary"])
-        await message.channel.send(embed=embed)
+            # PRINT ALL 10
+            for i in Fics:
+                # format it nicely
 
-        # PRINTS ALL
-        for i in Fics:
-            # format it nicely
+                embed = discord.Embed(
+                    url=i["link"],
+                    title=i["title"]
+                )
+                # embed.set_author(name) - eat author url
 
-            embed = discord.Embed(
-                url=i["link"],
-                title=i["title"]
-            )
-            # embed.set_author(name) - eat author url
+                embed.add_field(name="Author", value=i["author"])
 
-            embed.add_field(name="Author", value=i["author"])
+                # embed.add_field(name="Summary", value=i["summary"])
+                await message.channel.send(embed=embed)
 
-            # embed.add_field(name="Summary", value=i["summary"])
-            await message.channel.send(embed=embed)
+        except:
+            await message.channel.send('error')
+
+        Fics *= 0
 
 
 client.run(os.environ['token'])

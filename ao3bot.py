@@ -4,51 +4,14 @@ from collections import OrderedDict
 
 
 def createFic(*args):
-    return {"hits": int(args[0]), "kudos": int(args[1]), "title": args[2], "author": args[3], "summary": args[4],
-            "link": args[5], "quality": int(args[1]) / int(args[0])}
-
-
-class Fic:
-
-    def __init__(self, *args):
-        self.hits = int(args[0])
-        self.kudos = int(args[1])
-        self.title = args[2]
-        self.author = args[3]
-        self.summary = args[4]
-        self.link = args[5]
-        self.quality = self.prime_tasty()
-        # needs to eat link obviously
-        # language =
-        # warnings =
-
-    def prime_tasty(self):
-        # make it depend on the number of pages
-        # if self.kudos < 5:
-        #    return 0
-
-        return self.kudos / self.hits
-
-    # nie liczy jak zero
-    # jakies minimum kudosow
-    # w pozniejszej zabawie mozna dodac bookmarki komentarze
-    # language, warnings!!
-
-    def fprint(self):
-        print(self.title)
-        print(self.author)
-        print(self.link)
-        print(self.hits)
-        print(self.kudos)
-        print(self.summary)
-        print("\n")
-
+    return{"hits": int(args[0]), "kudos": int(args[1]), "title": args[2], "author": args[3], "summary": args[4],
+           "link": args[5], "quality": int(args[1])/int(args[0])}
 
 class Search:
+
     Fics = []
 
     def __init__(self, *args):
-        # function to ao3ify that string of a bitch
         self.tag = self.ao3ify_str(args[0])
         # check if tag ready or search it
         # make tag into soup
@@ -134,9 +97,7 @@ class Search:
                         self.Fics.append(ficcy)
 
     def print_best(self):
-        print("printing best")
-        # for x in self.Fics:
-        # x.fprint()
+        return self.Fics
 
     def minf(self):
         fmin = self.Fics[0]
@@ -154,8 +115,7 @@ class Search:
             return False
 
     def ao3ify_str(self, ao3str):
-        changes = OrderedDict(
-            [(" ", "%20"), ("/", "*s*"), (".", "*d*"), ("|", "%7C")])  # no need for ordered dicts, they are ordered now
+        changes = OrderedDict([(" ", "%20"), ("/", "*s*"), (".","*d*"), ("|", "%7C")]) # no need for ordered dicts, they are ordered now
         for i, j in changes.items():
             ao3str = ao3str.replace(i, j)
 
